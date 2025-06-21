@@ -1,7 +1,9 @@
 # o-spot
 Простой веб сервер в докере для отображения содержимой папки. В качестве хост машины предлагается успользовать Ubuntu 24.04. Подключение к ней рекомендуется использовать SSH.
-##Подготовка
-###Установка Docker
+## Подготовка
+### Установка Docker
+
+```bash
 sudo apt-get update && sudo apt-get install && \
 ca-certificates curl && \
 sudo install -m 0755 -d /etc/apt/keyrings && \
@@ -13,8 +15,9 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
 sudo apt-get update && \
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
 
-или есть вариант короче (не пробовал):
+или есть вариант короче (пробовал только на raspberry pi):
 
 ```bash
 curl -fsSL https://get.docker.com | sudo sh
@@ -27,7 +30,7 @@ sudo usermod -aG docker $USER
 ```
 
 перелогиниться, чтобы изменения применились (или `sudo reboot now`)
-###Склонировать репозиторий
+### Склонировать репозиторий
 В любое место скопировать себе репозиторий и перейти в него:
 
 ```bash
@@ -35,7 +38,7 @@ git clone https://github.com/alpha-kudryash/o-spot.git && cd o-spot
 ```
 
 
-###Настроить папку с результатами
+### Настроить папку с результатами
 Определиться с путём папки с результатами (пусть будет **/home/user/res/**). Сделать папку с результатами выполняемой
 
 ```bash
@@ -44,7 +47,7 @@ sudo chmod -R a+rX /home/user/res/
 
 Для того, чтобы файлы в эту папку передавать, можно расшарить её по smb, можно передать по тому же SSH с помощью WinSCP на Windows (или использовать альтернативы на Linux, nautilus+sftp, FileZilla, gftp).
 
-####Расшарить папку SMB
+#### Расшарить папку SMB
 Установить samba
 
 
@@ -104,7 +107,7 @@ chown $USER:$USER /home/user/res/
 sudo systemctl restart smbd
 ```
 
-###Запуск докер контейнера
+### Запуск докер контейнера
 
 Нужно, чтобы ничего не было запущено на 80 порту. В результате выполнения команды
 
@@ -132,10 +135,10 @@ chmod +x run_container.sh
 docker stop result-page && docker rm result-page && docker rmi host-result-page
 ```
 
-###Проверка работы
+### Проверка работы
 После запуска докера на ip хостовой машины на порту 80 должен заработать веб страница с сожержимым папки. Находясь в сети хостовой машины нужно в браузере ввести ip адрес хостовой машины.
 
-##Полезные команды докера
+## Полезные команды докера
 Для просмотра всех контейнеров
 
 ```bash
